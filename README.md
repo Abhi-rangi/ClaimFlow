@@ -67,13 +67,7 @@ The backend includes Swagger for interactive API documentation and testing.
 
 <br>
 
-# <!--
 
-== SCREENSHOT PLACEHOLDER: Swagger UI
-== Replace this comment with a screenshot of your Swagger UI.
-== Example: ![Swagger Screenshot]()
-===================================================================
--->
 ![Swagger API Documentation](images/swagger-api.png)
 
 ---
