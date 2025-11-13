@@ -1,0 +1,84 @@
+<div class="claims-container">
+  <div class="header-actions">
+    <h2>Claims Management</h2>
+    <div class="filters">
+      <mat-form-field appearance="outline" style="width: 200px;">
+        <mat-label>Filter by Status</mat-label>
+        <mat-select [(ngModel)]="statusFilter" (selectionChange)="onStatusFilterChange()">
+          <mat-option value="">All Claims</mat-option>
+          <mat-option value="Pending">Pending</mat-option>
+          <mat-option value="Under Review">Under Review</mat-option>
+          <mat-option value="Approved">Approved</mat-option>
+          <mat-option value="Denied">Denied</mat-option>
+          <mat-option value="Closed">Closed</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+        Add New Claim
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading claims...
+  </div>
+
+  <div *ngIf="!loading" class="table-container">
+    <table mat-table [dataSource]="dataSource" class="claims-table">
+      <ng-container matColumnDef="claimNumber">
+        <th mat-header-cell *matHeaderCellDef>Claim Number</th>
+        <td mat-cell *matCellDef="let claim">{{ claim.claimNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="claimantName">
+        <th mat-header-cell *matHeaderCellDef>Claimant Name</th>
+        <td mat-cell *matCellDef="let claim">{{ claim.claimantName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="claimantEmail">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let claim">{{ claim.claimantEmail }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="claimAmount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let claim">{{ formatCurrency(claim.claimAmount) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let claim">
+          <span [class]="'status-badge status-' + claim.status.toLowerCase().replace(' ', '-')">
+            {{ claim.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="filedDate">
+        <th mat-header-cell *matHeaderCellDef>Filed Date</th>
+        <td mat-cell *matCellDef="let claim">{{ formatDate(claim.filedDate) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let claim">
+          <button mat-icon-button color="primary" (click)="openEditDialog(claim)" title="Edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteClaim(claim.id!)" title="Delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div *ngIf="dataSource.data.length === 0" class="no-data">
+      No claims found.
+    </div>
+  </div>
+</div>
+

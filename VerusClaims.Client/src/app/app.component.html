@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <span>Claims Management Platform</span>
+  <span class="spacer"></span>
+  
+  <ng-container *ngIf="isAuthenticated$ | async; else loginButton">
+    <div class="user-info">
+      <div class="user-details" *ngIf="user$ | async as user">
+        <span class="user-name">{{ user.name || user.email }}</span>
+        <span class="user-role" *ngIf="userRoles$ | async as roles">
+          <mat-icon class="role-icon">badge</mat-icon>
+          {{ roles.join(', ') || 'No role assigned' }}
+        </span>
+      </div>
+      <button mat-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </div>
+  </ng-container>
+  
+  <ng-template #loginButton>
+    <button mat-button (click)="login()">
+      <mat-icon>login</mat-icon>
+      Login
+    </button>
+  </ng-template>
+</mat-toolbar>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+

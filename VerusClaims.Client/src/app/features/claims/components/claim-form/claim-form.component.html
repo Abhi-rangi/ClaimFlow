@@ -1,0 +1,122 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Claim' : 'Add New Claim' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="claimForm" class="claim-form">
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Claim Number</mat-label>
+        <input matInput formControlName="claimNumber" placeholder="Auto-generated if left empty">
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Claimant Name</mat-label>
+        <input matInput formControlName="claimantName" required>
+        <mat-error *ngIf="claimForm.get('claimantName')?.hasError('required')">
+          Claimant name is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="claimantEmail" required>
+        <mat-error *ngIf="claimForm.get('claimantEmail')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="claimForm.get('claimantEmail')?.hasError('email')">
+          Invalid email format
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="claimantPhone" required>
+        <mat-error *ngIf="claimForm.get('claimantPhone')?.hasError('required')">
+          Phone is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Claim Amount</mat-label>
+        <input matInput type="number" formControlName="claimAmount" required>
+        <span matPrefix>$&nbsp;</span>
+        <mat-error *ngIf="claimForm.get('claimAmount')?.hasError('required')">
+          Claim amount is required
+        </mat-error>
+        <mat-error *ngIf="claimForm.get('claimAmount')?.hasError('min')">
+          Amount must be positive
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Incident Date</mat-label>
+        <input matInput [matDatepicker]="incidentPicker" formControlName="incidentDate" required>
+        <mat-datepicker-toggle matSuffix [for]="incidentPicker"></mat-datepicker-toggle>
+        <mat-datepicker #incidentPicker></mat-datepicker>
+        <mat-error *ngIf="claimForm.get('incidentDate')?.hasError('required')">
+          Incident date is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Filed Date</mat-label>
+        <input matInput [matDatepicker]="filedPicker" formControlName="filedDate" required>
+        <mat-datepicker-toggle matSuffix [for]="filedPicker"></mat-datepicker-toggle>
+        <mat-datepicker #filedPicker></mat-datepicker>
+        <mat-error *ngIf="claimForm.get('filedDate')?.hasError('required')">
+          Filed date is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option *ngFor="let status of statusOptions" [value]="status">
+            {{ status }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="claimForm.get('status')?.hasError('required')">
+          Status is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="4" required></textarea>
+        <mat-error *ngIf="claimForm.get('description')?.hasError('required')">
+          Description is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Notes (Optional)</mat-label>
+        <textarea matInput formControlName="notes" rows="3"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!claimForm.valid">
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </button>
+</mat-dialog-actions>
+
