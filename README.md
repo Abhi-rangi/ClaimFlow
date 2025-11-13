@@ -71,22 +71,3 @@ The backend includes Swagger for interactive API documentation and testing.
 ![Swagger API Documentation](images/swagger-api.png)
 
 ---
-
-## 💡 Resume & Interview Highlights
-
-Use these points to describe the project on your resume or in an interview.
-
-1.  **"Built a full-stack Claims Management System using a C# ASP.NET Core Web API and an Angular frontend."**
-
-    - _Demonstrates end-to-end development capability._
-
-2.  **"Implemented RESTful APIs with Entity Framework Core and optimized complex queries with raw SQL stored procedures."**
-
-    - _Shows deep database expertise with both ORM and SQL._
-
-3.  **"Developed a robust unit test suite using xUnit for the backend service layer to ensure code quality and reliability."**
-
-    - _Directly addresses the need for professional testing practices._
-
-4.  **"Designed and built a professional, business-focused UI with Angular and modern reactive forms."**
-    - _Highlights practical, business-oriented frontend skills over academic ones._
